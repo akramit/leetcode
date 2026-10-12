@@ -1,10 +1,12 @@
 # LeetCode questions
 
-The only questions I prepare for tech interviews.
+Tech Interviews quick recap
 
-Whenever I come across questions with ideas that help solve other problems, I put them here. It is kind of [Blind 75](https://neetcode.io/practice/practice/blind75) and Blind 150, but I might add problems here and there that I feel are must-dos for understanding.
+It is kind of [Blind 75](https://neetcode.io/practice/practice/blind75) and Blind 150, but I might add problems here and there that I feel are must-dos for understanding.
 
 Progress: **0 / 75**
+
+**Site:** [akramit.github.io/leetcode](https://akramit.github.io/leetcode/) (GitHub Pages — checkboxes save in your browser)
 
 ## Arrays & Hashing
 

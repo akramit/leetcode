@@ -9,6 +9,8 @@ ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
 OUT = ROOT / "site"
 
+INLINE_MD = re.compile(r"\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*")
+
 
 def slugify(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
@@ -54,8 +56,33 @@ def parse_readme(text: str) -> tuple[str, list[str], list[dict]]:
     return title, intro, sections
 
 
+def render_inline_markdown(text: str) -> str:
+    parts: list[str] = []
+    last = 0
+    for m in INLINE_MD.finditer(text):
+        parts.append(html.escape(text[last : m.start()]))
+        if m.group(3) is not None:
+            parts.append(f"<strong>{html.escape(m.group(3))}</strong>")
+        else:
+            parts.append(
+                f'<a href="{html.escape(m.group(2), quote=True)}" '
+                f'target="_blank" rel="noopener">{html.escape(m.group(1))}</a>'
+            )
+        last = m.end()
+    parts.append(html.escape(text[last:]))
+    return "".join(parts)
+
+
+def intro_for_site(intro: list[str]) -> list[str]:
+    """Drop lines that duplicate live UI on the static site."""
+    skip_prefixes = ("Progress:", "**Site:**")
+    return [line for line in intro if not line.startswith(skip_prefixes)]
+
+
 def build_html(title: str, intro: list[str], sections: list[dict]) -> str:
-    intro_html = "\n".join(f"<p>{html.escape(p)}</p>" for p in intro)
+    intro_html = "\n".join(
+        f"<p>{render_inline_markdown(p)}</p>" for p in intro_for_site(intro)
+    )
 
     sections_html = []
     for sec in sections:
@@ -110,6 +137,7 @@ def build_html(title: str, intro: list[str], sections: list[dict]) -> str:
     }}
     .intro {{ color: var(--muted); margin-bottom: 2rem; }}
     .intro a {{ color: var(--accent); }}
+    .intro strong {{ color: var(--text); font-weight: 600; }}
     nav {{
       display: flex;
       flex-wrap: wrap;

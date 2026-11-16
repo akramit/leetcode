@@ -1,12 +1,12 @@
 # LeetCode questions
 
+**Site:** [Open the GitHub Pages website](https://akramit.github.io/leetcode/) — coding practice and the reading shelf. Checkbox progress saves in your browser.
+
 Tech Interviews quick recap
 
 It is kind of [Blind 75](https://neetcode.io/practice/practice/blind75) and Blind 150, but I might add problems here and there that I feel are must-dos for understanding.
 
 Progress: **0 / 75**
-
-**Site:** [akramit.github.io/leetcode](https://akramit.github.io/leetcode/) (GitHub Pages — checkboxes save in your browser)
 
 ## Arrays & Hashing
 
